@@ -1,0 +1,213 @@
+/* Mobile */
+@media (max-width: 739px) {
+    .mobile {
+        display: block;
+    }
+
+    .text-header-contain {
+        display: none;
+    }
+
+    .link-header-contain {
+        display: none;
+    }
+
+    .header-contain .hamburger-menu {
+        display: block;
+    }
+
+    .overlay {
+        animation: fadeIn linear 0.3s;
+    }
+    
+    .hamburger-menu-checkbox:checked ~ .overlay{
+        display: block;
+    }
+
+    .category-contain-mobile {
+        display: block;
+        transform: translate(-100%);
+        opacity: 0;
+        transition: transform linear 0.2s, opacity linear 0.2s;
+        -webkit-box-shadow: 5px 1px 18px 0px rgba(88,88,88,0.67); 
+        box-shadow: 5px 1px 18px 0px rgba(88,88,88,0.67);
+        padding-left: 32px;
+        z-index: 20;
+    }
+
+    .hamburger-menu-checkbox:checked ~ .category-contain-mobile {
+        transform: translate(0%);
+        opacity: 1;
+    }
+
+    .category-contain-mobile .input-box {
+        width: 90%;
+    }
+
+    .category-contain-mobile .close-icon {
+        align-self: center;
+        margin: 0px 15px;
+        font-size: 1.5rem;
+        color: #dcdde1;
+    }
+
+    .category-contain-mobile .close-icon:hover {
+        color: #718093;
+    }
+
+
+    .category-list.mobile > li {
+        color: black;
+    }
+
+    .category-list.mobile > li:hover {
+        background-color: #f0f0f0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .genre-text {
+        display: block;
+        color: white;
+        font-size: 1.6rem;
+        font-family: "Swonburst One", cursive;
+        text-align: center;
+    }
+
+    #load-more-btn {
+        flex: 1;
+    }
+
+    .footer-contain,
+    .footer-contain-top {
+        border: none;
+    }
+
+    .footer-logo-left,
+    .footer-text {
+        display: none;
+    }
+
+    .category-text {
+        font-size: 9px;
+        padding-bottom: 16px;
+    }
+
+}
+
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+    .tablet {
+        display: block;
+    }
+
+    .header-contain .img-header-contain {
+        margin-left: 250px;
+    }
+
+    .link-header-contain {
+        min-width: 260px;
+    }
+
+    .text-header-contain {
+        display: none;
+    }
+
+    .header-contain .hamburger-menu {
+        display: block;
+    }
+
+    .overlay {
+        animation: fadeIn linear 0.3s;
+    }
+    
+    .hamburger-menu-checkbox:checked ~ .overlay{
+        display: block;
+    }
+
+    .category-contain-tablet {
+        display: block;
+        transform: translate(-100%);
+        opacity: 0;
+        transition: transform linear 0.2s, opacity linear 0.2s;
+        -webkit-box-shadow: 5px 1px 18px 0px rgba(88,88,88,0.67); 
+        box-shadow: 5px 1px 18px 0px rgba(88,88,88,0.67);
+        padding-left: 32px;
+        z-index: 20;
+    }
+
+    .hamburger-menu-checkbox:checked ~ .category-contain-tablet {
+        transform: translate(0%);
+        opacity: 1;
+    }
+
+    .category-contain-tablet .input-box {
+        width: 90%;
+    }
+
+    .category-contain-tablet .close-icon {
+        align-self: center;
+        margin: 0px 15px;
+        font-size: 1.5rem;
+        color: #dcdde1;
+    }
+
+    .category-contain-tablet .close-icon:hover {
+        color: #718093;
+    }
+
+
+    .category-list.tablet > li {
+        color: black;
+    }
+
+    .category-list.tablet > li:hover {
+        background-color: #f0f0f0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .genre-text {
+        display: block;
+        color: white;
+        font-size: 1.6rem;
+        font-family: "Swonburst One", cursive;
+        text-align: center;
+    }
+}
+
+/* PC */
+
+@media (min-width: 1024px) {
+    /* .hamburger-menu {
+        display: none;
+    }
+
+    .hamburger-menu-checkbox {
+        display: none;
+    }
+
+    .category-contain-tablet {
+        display: none
+    } */
+    
+}
