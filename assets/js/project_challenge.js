@@ -439,3 +439,81 @@ homeIconMobile.addEventListener("click", () => {
 homeIconPCTablet.addEventListener("click", () => {
   applyFeaturedGamesToPage();
 });
+
+// Apply images to slider images
+
+// const items = document.querySelectorAll(".item-slider-images");
+// const circleDots = document.querySelectorAll(".circle-dots li");
+const slider = document.querySelector(".list-images");
+const next = document.getElementById("next");
+const prev = document.getElementById("prev");
+const circleDotsContain = document.querySelector(".circle-dots");
+
+let active = 0;
+let maxindexOfImages = 9;
+
+const reloadSlider = () => {
+  slider.style.left =
+    -document.querySelectorAll(".item-slider-images")[active].offsetLeft + "px";
+  let last_active_dots = document.querySelector(".circle-dots li.active");
+  last_active_dots.classList.remove("active");
+  document.querySelectorAll(".circle-dots li")[active].classList.add("active");
+  clearInterval(refreshInterval);
+  refreshInterval = setInterval(moveImagesToTheRight, 3000);
+};
+
+const moveImagesToTheRight = () => {
+  active += 1;
+  if (active > maxindexOfImages) {
+    active = 0;
+  }
+  reloadSlider();
+};
+
+const moveImagesToTheLeft = () => {
+  active -= 1;
+  if (active < 0) {
+    active = maxindexOfImages;
+  }
+  reloadSlider();
+};
+
+const clickToTheDots = (index) => {
+  active = index;
+  reloadSlider();
+};
+
+const applyImageToSlider = async () => {
+  try {
+    gameFeaturedList = await getFeaturedGames();
+    if (gameFeaturedList.length === 0) {
+      swal({
+        text: "Không tìm thấy thông tin tìm kiếm",
+        icon: "info",
+      });
+    } else {
+      gameFeaturedList.forEach((element, index) => {
+        let divImageSlider = document.createElement("div");
+        divImageSlider.className = "item-slider-images";
+        divImageSlider.innerHTML = `<img src="${element["header_image"]}" alt="Image slider">`;
+        slider.appendChild(divImageSlider);
+
+        let liContain = document.createElement("div");
+        liContain.innerHTML = `<li onclick="clickToTheDots(${index})"></li>`;
+        circleDotsContain.appendChild(liContain);
+      });
+      const firstCircleDot = document.querySelector(".circle-dots li");
+      firstCircleDot.classList.add("active");
+      refreshInterval = setInterval(moveImagesToTheRight, 3000);
+    }
+    return 0;
+  } catch (error) {
+    console.log(error.message);
+    return 0;
+  }
+};
+
+// Start slider images
+
+let refreshInterval;
+applyImageToSlider();
