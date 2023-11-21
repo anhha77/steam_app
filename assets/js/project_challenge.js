@@ -1,5 +1,12 @@
-// import {getgenreList, getFeaturedGames, getGamesBasedOnGenres, getGamesBasedOnName, BASE_URL} from "./test.mjs";
-const BASE_URL = "https://steam-api-dot-cs-platform-306304.et.r.appspot.com";
+import {
+  getgenreList,
+  getFeaturedGames,
+  getGamesBasedOnGenres,
+  getGamesBasedOnName,
+  BASE_URL,
+} from "./test.mjs";
+
+// const BASE_URL = "https://steam-api-dot-cs-platform-306304.et.r.appspot.com";
 const categoryPC = document.querySelector(".category-pc");
 const categoryTablet = document.querySelector(".category-tablet");
 const categoryMobile = document.querySelector(".category-mobile");
@@ -24,6 +31,76 @@ let gameSearchList = [];
 
 let textInInput = "";
 
+// // Show detail of a game
+const gameDetail = async (appid) => {
+  disableBtnLoadMore();
+  try {
+    let response = await fetch(`${BASE_URL}/single-game/${appid}`);
+    if (response.ok) {
+      let data = await response.json();
+      console.log(data["data"]["name"]);
+      genreTextPC.textContent = `${data["data"]["name"]}`;
+      genreTextMobileTablet.textContent = `${data["data"]["name"]}`;
+      rowContain.innerHTML = "";
+      let divContain = document.createElement("div");
+
+      divContain.className = "col l-12 m-12 c-12 item";
+      divContain.innerHTML = `<div class="game-detail-contain">
+                    <div class="game-description">
+                        <div class="game-description-top">
+                            <img src="${
+                              data["data"]["header_image"]
+                            }" alt="Game image">
+                            <div class="game-description-text">
+                                <p>${data["data"]["description"]}</p>
+                                <p>Positive Rating: ${
+                                  data["data"]["positive_ratings"]
+                                }</p>
+                                <p>Negative Rating: ${
+                                  data["data"]["negative_ratings"]
+                                }</p>
+                                <p>Developer: ${data["data"]["developer"]}</p>
+                                <p>Release Date: ${
+                                  data["data"]["release_date"].split("T")[0]
+                                }</p>
+                                <p>Price: ${data["data"]["price"]}</p>
+                            </div>
+                        </div>
+                        <div class="game-description-bottom"></div>
+                    </div>
+
+                    <div class="row game-images-contain">
+                        <div class="col l-6 m-6 c-12">
+                            <img src="${
+                              data["data"]["header_image"]
+                            }" alt="Game image">
+                        </div>
+                        <div class="col l-6 m-6 c-12">
+                            <img src="${
+                              data["data"]["background"]
+                            }" alt="Game image">
+                        </div>
+                    </div>
+                </div>`;
+      rowContain.appendChild(divContain);
+      let divGameTags = document.querySelector(".game-description-bottom");
+      data["data"]["steamspy_tags"].forEach((element) => {
+        let spanElement = document.createElement("span");
+        spanElement.textContent = `${element}`;
+        divGameTags.appendChild(spanElement);
+      });
+
+      return data;
+    }
+    return;
+  } catch (error) {
+    console.log(error.message);
+    return;
+  }
+};
+
+window.gameDetail = gameDetail;
+
 // Disable button load more
 
 const disableBtnLoadMore = () => {
@@ -38,24 +115,24 @@ const enableBtnLoadMore = () => {
 
 // Get game genre for web
 
-const getgenreList = async () => {
-  let genreListFunc = [];
-  try {
-    let response = await fetch(`${BASE_URL}/genres`);
-    if (response.ok) {
-      let data = await response.json();
-      (data ? data.data : []).forEach((item) => {
-        genreListFunc.push(item["name"]);
-      });
-      // console.log(genreListFunc);
-      return genreListFunc;
-    }
-    return [];
-  } catch (error) {
-    console.log(error.message);
-    return [];
-  }
-};
+// const getgenreList = async () => {
+//   let genreListFunc = [];
+//   try {
+//     let response = await fetch(`${BASE_URL}/genres`);
+//     if (response.ok) {
+//       let data = await response.json();
+//       (data ? data.data : []).forEach((item) => {
+//         genreListFunc.push(item["name"]);
+//       });
+//       // console.log(genreListFunc);
+//       return genreListFunc;
+//     }
+//     return [];
+//   } catch (error) {
+//     console.log(error.message);
+//     return [];
+//   }
+// };
 
 const applyToUl = async () => {
   try {
@@ -97,20 +174,20 @@ applyToUl();
 
 // Get games
 
-const getFeaturedGames = async () => {
-  try {
-    let response = await fetch(`${BASE_URL}/features`);
-    if (response.ok) {
-      let data = await response.json();
-      // console.log(data["data"]);
-      return data["data"];
-    }
-    return [];
-  } catch (error) {
-    console.log(error.message);
-    return [];
-  }
-};
+// const getFeaturedGames = async () => {
+//   try {
+//     let response = await fetch(`${BASE_URL}/features`);
+//     if (response.ok) {
+//       let data = await response.json();
+//       // console.log(data["data"]);
+//       return data["data"];
+//     }
+//     return [];
+//   } catch (error) {
+//     console.log(error.message);
+//     return [];
+//   }
+// };
 
 //  Apply  featured games to page
 
@@ -153,23 +230,23 @@ applyFeaturedGamesToPage();
 
 // Get games based on genres when clicked in ul
 
-const getGamesBasedOnGenres = async (searchString) => {
-  // console.log(typeof `${numberOfGame}`);
-  try {
-    let response = await fetch(
-      `${BASE_URL}/games/?genres=${searchString}&limit=${numberOfGame}`
-    );
-    if (response.ok) {
-      let data = await response.json();
-      // console.log(data["data"]);
-      return data["data"];
-    }
-    return [];
-  } catch (error) {
-    console.log(error.message);
-    return [];
-  }
-};
+// const getGamesBasedOnGenres = async (searchString) => {
+//   // console.log(typeof `${numberOfGame}`);
+//   try {
+//     let response = await fetch(
+//       `${BASE_URL}/games/?genres=${searchString}&limit=${numberOfGame}`
+//     );
+//     if (response.ok) {
+//       let data = await response.json();
+//       // console.log(data["data"]);
+//       return data["data"];
+//     }
+//     return [];
+//   } catch (error) {
+//     console.log(error.message);
+//     return [];
+//   }
+// };
 
 const applyGamesBasedOnGenresToPage = async (searchString) => {
   enableBtnLoadMore();
@@ -254,22 +331,22 @@ loadBtn.addEventListener("click", () => {
 
 // Search games by input box
 
-const getGamesBasedOnName = async (searchString) => {
-  try {
-    let response = await fetch(
-      `${BASE_URL}/games?q=${searchString}&limit=${numberOfGame}`
-    );
-    if (response.ok) {
-      let data = await response.json();
-      // console.log(data["data"]);
-      return data["data"];
-    }
-    return [];
-  } catch (error) {
-    console.log(error.message);
-    return [];
-  }
-};
+// const getGamesBasedOnName = async (searchString) => {
+//   try {
+//     let response = await fetch(
+//       `${BASE_URL}/games?q=${searchString}&limit=${numberOfGame}`
+//     );
+//     if (response.ok) {
+//       let data = await response.json();
+//       // console.log(data["data"]);
+//       return data["data"];
+//     }
+//     return [];
+//   } catch (error) {
+//     console.log(error.message);
+//     return [];
+//   }
+// };
 
 const applyGamesBasedOnNameToPage = async (searchString) => {
   enableBtnLoadMore();
@@ -360,74 +437,6 @@ inputBoxMobile.addEventListener("input", function () {
   inputBoxTablet.value = this.value;
   inputBoxPC.value = this.value;
 });
-
-// Show detail of a game
-const gameDetail = async (appid) => {
-  disableBtnLoadMore();
-  try {
-    let response = await fetch(`${BASE_URL}/single-game/${appid}`);
-    if (response.ok) {
-      let data = await response.json();
-      console.log(data["data"]["name"]);
-      genreTextPC.textContent = `${data["data"]["name"]}`;
-      genreTextMobileTablet.textContent = `${data["data"]["name"]}`;
-      rowContain.innerHTML = "";
-      let divContain = document.createElement("div");
-
-      divContain.className = "col l-12 m-12 c-12 item";
-      divContain.innerHTML = `<div class="game-detail-contain">
-                    <div class="game-description">
-                        <div class="game-description-top">
-                            <img src="${
-                              data["data"]["header_image"]
-                            }" alt="Game image">
-                            <div class="game-description-text">
-                                <p>${data["data"]["description"]}</p>
-                                <p>Positive Rating: ${
-                                  data["data"]["positive_ratings"]
-                                }</p>
-                                <p>Negative Rating: ${
-                                  data["data"]["negative_ratings"]
-                                }</p>
-                                <p>Developer: ${data["data"]["developer"]}</p>
-                                <p>Release Date: ${
-                                  data["data"]["release_date"].split("T")[0]
-                                }</p>
-                                <p>Price: ${data["data"]["price"]}</p>
-                            </div>
-                        </div>
-                        <div class="game-description-bottom"></div>
-                    </div>
-                    
-                    <div class="row game-images-contain">
-                        <div class="col l-6 m-6 c-12">
-                            <img src="${
-                              data["data"]["header_image"]
-                            }" alt="Game image">
-                        </div>
-                        <div class="col l-6 m-6 c-12">
-                            <img src="${
-                              data["data"]["background"]
-                            }" alt="Game image">
-                        </div>
-                    </div>
-                </div>`;
-      rowContain.appendChild(divContain);
-      let divGameTags = document.querySelector(".game-description-bottom");
-      data["data"]["steamspy_tags"].forEach((element) => {
-        let spanElement = document.createElement("span");
-        spanElement.textContent = `${element}`;
-        divGameTags.appendChild(spanElement);
-      });
-
-      return data;
-    }
-    return;
-  } catch (error) {
-    console.log(error.message);
-    return;
-  }
-};
 
 // Click to li home return featured games
 
