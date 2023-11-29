@@ -251,7 +251,8 @@ applyFeaturedGamesToPage();
 const applyGamesBasedOnGenresToPage = async (searchString) => {
   enableBtnLoadMore();
   try {
-    gameGenresList = await getGamesBasedOnGenres(searchString);
+    gameGenresList = await getGamesBasedOnGenres(searchString, numberOfGame);
+    console.log(gameGenresList);
     if (gameGenresList.length === 0) {
       swal({
         text: "Không tìm thấy thông tìn tìm kiếm",
@@ -351,7 +352,7 @@ loadBtn.addEventListener("click", () => {
 const applyGamesBasedOnNameToPage = async (searchString) => {
   enableBtnLoadMore();
   try {
-    gameSearchList = await getGamesBasedOnName(searchString);
+    gameSearchList = await getGamesBasedOnName(searchString, numberOfGame);
     if (gameSearchList.length === 0) {
       swal({
         text: "Không tìm thấy thông tin tìm kiếm",
