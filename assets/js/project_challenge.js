@@ -4,13 +4,13 @@ import {
   getGamesBasedOnGenres,
   getGamesBasedOnName,
   BASE_URL,
-} from "./test.mjs";
+} from "./callAPI.mjs";
 
 // const BASE_URL = "https://steam-api-dot-cs-platform-306304.et.r.appspot.com";
 const categoryPC = document.querySelector(".category-pc");
 const categoryTablet = document.querySelector(".category-tablet");
 const categoryMobile = document.querySelector(".category-mobile");
-const rowContain = document.querySelector(".game-contain-row");
+const rowContain = document.querySelector(".gae-contain-row");
 const genreTextPC = document.querySelector(".text-header-contain h3");
 const genreTextMobileTablet = document.querySelector(".genre-text");
 const loadBtn = document.getElementById("load-more-btn");
